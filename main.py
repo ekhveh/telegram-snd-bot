@@ -107,5 +107,5 @@ def send_music(message):
         bot.reply_to(message, "لطفاً ابتدا وارد شوید (/login)")
     session.close()
 
-# bot.infinity_polling()
-app.run_polling(close_loop=False, drop_pending_updates=True)
+bot.infinity_polling()
+# app.run_polling(close_loop=False, drop_pending_updates=True)
