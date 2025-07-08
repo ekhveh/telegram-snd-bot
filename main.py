@@ -3,8 +3,19 @@ from sqlalchemy import create_engine, Column, Integer, String, Boolean
 from sqlalchemy.orm import declarative_base, sessionmaker
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
+from flask import Flask
+import threading
 
+# راه‌اندازی وب‌سرور ساختگی برای فریب Render
+app = Flask(__name__)
+@app.route('/')
+def index():
+    return "Bot is running!"
 
+def run_web():
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 10000)))
+
+# تنظیمات بات و پایگاه داده
 TOKEN = os.getenv("BOT_TOKEN")
 DATABASE_URL = os.getenv("DATABASE_URL")
 
@@ -96,5 +107,6 @@ def send_music(message):
         bot.reply_to(message, "لطفاً ابتدا وارد شوید (/login)")
     session.close()
 
-bot.infinity_polling()
-
+if __name__ == "__main__":
+    threading.Thread(target=run_web).start()
+    bot.infinity_polling()
