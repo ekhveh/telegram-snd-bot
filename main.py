@@ -4,6 +4,10 @@ from sqlalchemy.orm import declarative_base, sessionmaker
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 import threading
+from http.server import BaseHTTPRequestHandler, HTTPServer
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, CallbackQueryHandler, filters, ContextTypes
+
 # اجرای HTTP server برای باز نگه‌داشتن پورت
 def run_http_server():
     class SimpleHandler(BaseHTTPRequestHandler):
