@@ -3,22 +3,7 @@ from sqlalchemy import create_engine, Column, Integer, String, Boolean
 from sqlalchemy.orm import declarative_base, sessionmaker
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
-import threading
-from http.server import BaseHTTPRequestHandler, HTTPServer
-from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, CallbackQueryHandler, filters, ContextTypes
 
-# اجرای HTTP server برای باز نگه‌داشتن پورت
-def run_http_server():
-    class SimpleHandler(BaseHTTPRequestHandler):
-        def do_GET(self):
-            self.send_response(200)
-            self.end_headers()
-            self.wfile.write(b"Bot is running...")
-    server = HTTPServer(("0.0.0.0", 10000), SimpleHandler)
-    server.serve_forever()
-
-threading.Thread(target=run_http_server, daemon=True).start()
 
 TOKEN = os.getenv("BOT_TOKEN")
 DATABASE_URL = os.getenv("DATABASE_URL")
@@ -112,4 +97,4 @@ def send_music(message):
     session.close()
 
 bot.infinity_polling()
-# app.run_polling(close_loop=False, drop_pending_updates=True)
+
