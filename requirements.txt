@@ -1,4 +1,5 @@
 pyTelegramBotAPI
-SQLAlchemy
-psycopg2-binary
-Werkzeug
+sqlalchemy
+flask
+python-dotenv
+werkzeug
