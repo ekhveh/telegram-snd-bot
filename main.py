@@ -3,7 +3,7 @@ from sqlalchemy import create_engine, Column, Integer, String, Boolean
 from sqlalchemy.orm import declarative_base, sessionmaker
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
-
+import threading
 # اجرای HTTP server برای باز نگه‌داشتن پورت
 def run_http_server():
     class SimpleHandler(BaseHTTPRequestHandler):
