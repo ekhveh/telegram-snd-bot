@@ -4,6 +4,18 @@ from sqlalchemy.orm import declarative_base, sessionmaker
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 
+# اجرای HTTP server برای باز نگه‌داشتن پورت
+def run_http_server():
+    class SimpleHandler(BaseHTTPRequestHandler):
+        def do_GET(self):
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write(b"Bot is running...")
+    server = HTTPServer(("0.0.0.0", 10000), SimpleHandler)
+    server.serve_forever()
+
+threading.Thread(target=run_http_server, daemon=True).start()
+
 TOKEN = os.getenv("BOT_TOKEN")
 DATABASE_URL = os.getenv("DATABASE_URL")
 
@@ -95,4 +107,5 @@ def send_music(message):
         bot.reply_to(message, "لطفاً ابتدا وارد شوید (/login)")
     session.close()
 
-bot.infinity_polling()
+# bot.infinity_polling()
+app.run_polling(close_loop=False, drop_pending_updates=True)
